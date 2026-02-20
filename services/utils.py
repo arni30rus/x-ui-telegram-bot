@@ -1,7 +1,7 @@
 import secrets
 from config import (
     SERVER_DOMAIN, SERVER_PORT, REALITY_PUBLIC_KEY, REALITY_SNI, REALITY_SPIDER_X, 
-    REALITY_FINGERPRINT, SHARED_SID, SECURITY_TYPE, CLIENT_FLOW, TLS_ALPN
+    REALITY_FINGERPRINT, SHARED_SID, SECURITY_TYPE, CLIENT_FLOW, TLS_ALPN, TLS_SNI
 )
 
 def generate_vless_link(uuid: str, remark: str = "VLESS-Bot"):
@@ -23,7 +23,7 @@ def generate_vless_link(uuid: str, remark: str = "VLESS-Bot"):
     elif SECURITY_TYPE == "tls":
         # конфиг для TLS
         link += f"security=tls&"
-        link += f"sni={SERVER_DOMAIN}&fp={fingerprint}&"
+        link += f"sni={TLS_SNI}&fp={fingerprint}&"
         link += f"alpn={TLS_ALPN}&"
 
     # Добавляем flow

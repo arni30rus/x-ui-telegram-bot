@@ -26,5 +26,6 @@ REALITY_FINGERPRINT = os.getenv("REALITY_FINGERPRINT", "chrome")
 SECURITY_TYPE = os.getenv("SECURITY_TYPE", "reality")
 CLIENT_FLOW = os.getenv("CLIENT_FLOW", "")
 TLS_ALPN = os.getenv("TLS_ALPN", "h2,http/1.1")
+TLS_SNI = os.getenv("TLS_SNI", SERVER_DOMAIN)
 
 XUI_ADD_CLIENT_PATH = os.getenv("XUI_ADD_CLIENT_PATH", "/panel/inbound/addClient")
