@@ -23,7 +23,6 @@ VLESS Telegram Bot
 
      Запустите установщик 
       
-    chmod +x install.sh
     ./install.sh
      
  
