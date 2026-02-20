@@ -16,7 +16,7 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: Message):
     async with async_session_maker() as session:
-        # Создаем или получаем пользователя
+        # создаем или получаем пользователя
         result = await session.execute(select(User).where(User.telegram_id == message.from_user.id))
         user = result.scalar_one_or_none()
         
@@ -39,7 +39,7 @@ async def cmd_request(message: Message):
         result = await session.execute(select(User).where(User.telegram_id == message.from_user.id))
         user = result.scalar_one_or_none()
         
-        # Проверяем, есть ли уже активная заявка
+        # проверка - есть ли активная заявка
         existing_req = await session.execute(
             select(Request).where(Request.user_id == user.id, Request.status == "active")
         )
@@ -59,7 +59,7 @@ async def confirm_request(callback: CallbackQuery):
         result = await session.execute(select(User).where(User.telegram_id == user_id))
         user = result.scalar_one_or_none()
 
-        # Создаем заявку
+        # создаем заявку
         new_req = Request(user_id=user.id, status="pending")
         session.add(new_req)
         await session.commit()
@@ -68,7 +68,7 @@ async def confirm_request(callback: CallbackQuery):
         await callback.message.edit_text("✅ Заявка отправлена на модерацию.")
         await callback.answer()
 
-        # Уведомляем админов
+        # уведомляем админа
         for admin_id in config.ADMINS_ID:
             try:
                 text = (

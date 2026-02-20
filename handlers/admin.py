@@ -30,7 +30,7 @@ async def approve_request(callback: CallbackQuery):
             await callback.answer("Пользователь не найден.")
             return
 
-        # 3. Формируем email
+        # 3. Создаем логин - в xui это email
         if user.username:
             clean_username = user.username.lstrip('@')
             email = f"{clean_username}@from_bot"
@@ -38,7 +38,7 @@ async def approve_request(callback: CallbackQuery):
             email = f"tg_{user.telegram_id}@from_bot"
 
         try:
-            # 4. Создаем в X-UI
+            # 4. Создаем пользователя в xui
             uuid = await xui_api.create_user_in_xui(email)
 
             # 5. Обновляем статус заявки
@@ -60,7 +60,7 @@ async def approve_request(callback: CallbackQuery):
 
             panel_link = f'<a href="{config.XUI_BASE_URL}/panel/inbounds">Панель X-UI</a>' #cсылка для пункта 8
 
-            # 8. Сообщаем админу
+            # 8. Сообщаем админу что пользователь создан
             await callback.message.edit_text(
                 f"✅ Заявка #{req_id} одобрена.\n"
                 f"Пользователь: @{user.username or user.telegram_id}\n"

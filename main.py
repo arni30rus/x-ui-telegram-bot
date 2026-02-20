@@ -7,21 +7,21 @@ from config import BOT_TOKEN
 from database import init_db
 from handlers import user, admin
 
-# Настройка логирования
+
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 async def main():
-    # Инициализация БД
+    # инициализация БД
     await init_db()
     
     bot = Bot(token=BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
     
-    # Регистрация роутеров
+    # ссылки на хендлеры
     dp.include_router(user.router)
     dp.include_router(admin.router)
     
-    # Удаляем вебхуки, чтобы запустить поллинг (для локальной отладки)
+    # удаляем вебхуки, запускаем поллинг
     await bot.delete_webhook(drop_pending_updates=True)
     
     print("Бот запущен...")

@@ -1,29 +1,38 @@
 import secrets
-from urllib.parse import quote
-from config import SERVER_DOMAIN, REALITY_PUBLIC_KEY, REALITY_SNI, REALITY_SPIDER_X, REALITY_FINGERPRINT, SHARED_SID
+from config import (
+    SERVER_DOMAIN, SERVER_PORT, REALITY_PUBLIC_KEY, REALITY_SNI, REALITY_SPIDER_X, 
+    REALITY_FINGERPRINT, SHARED_SID, SECURITY_TYPE, CLIENT_FLOW, TLS_ALPN
+)
 
 def generate_vless_link(uuid: str, remark: str = "VLESS-Bot"):
-    port = 4433
-    security = "reality"
+    port = SERVER_PORT
     transport_type = "tcp"
-    
-    #  Используем общий SID из настроек, а не генерируем случайный
-    short_id = SHARED_SID 
-    
     fingerprint = REALITY_FINGERPRINT
 
-    spx_encoded = quote(REALITY_SPIDER_X, safe='')
-    
-    link = (
-        f"vless://{uuid}@{SERVER_DOMAIN}:{port}?"
-        f"type={transport_type}&"
-        f"security={security}&"
-        f"pbk={REALITY_PUBLIC_KEY}&"
-        f"fp={fingerprint}&"
-        f"sni={REALITY_SNI}&"
-        f"sid={short_id}&"
-        f"spx={spx_encoded}&"
-        f"flow=xtls-rprx-vision"
-        f"#{remark}"
-    )
+    # Базовая часть ссылки
+    link = f"vless://{uuid}@{SERVER_DOMAIN}:{port}?encryption=none&type={transport_type}&"
+
+    if SECURITY_TYPE == "reality":
+        # конфиг для  Reality
+        link += f"security=reality&"
+        link += f"sni={REALITY_SNI}&fp={fingerprint}&"
+        link += f"pbk={REALITY_PUBLIC_KEY}&sid={SHARED_SID}&"
+        if REALITY_SPIDER_X:
+            link += f"spx={REALITY_SPIDER_X}&"
+            
+    elif SECURITY_TYPE == "tls":
+        # конфиг для TLS
+        link += f"security=tls&"
+        link += f"sni={SERVER_DOMAIN}&fp={fingerprint}&"
+        link += f"alpn={TLS_ALPN}&"
+
+    # Добавляем flow
+    if CLIENT_FLOW:
+        link += f"flow={CLIENT_FLOW}&"
+
+    # Убираем лишний & в конце, если есть, и добавляем хэш
+    if link.endswith("&"):
+        link = link[:-1]
+        
+    link += f"#{remark}"
     return link

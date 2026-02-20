@@ -20,7 +20,7 @@ async def create_user_in_xui(email: str):
         "Referer": f"{config.XUI_BASE_URL}/"
     }
 
-    # 1. Создаем через API
+    # 1. Создаем пользователя через post
     async with httpx.AsyncClient(verify=False) as client:
         print("[DEBUG] Логин и создание клиента...")
         login_resp = await client.post(
@@ -38,7 +38,7 @@ async def create_user_in_xui(email: str):
         client_settings = {
             "id": new_uuid,
             "email": email,
-            "flow": "xtls-rprx-vision", 
+            "flow": config.CLIENT_FLOW, 
             "limitIp": 0,
             "totalGB": 0
         }
