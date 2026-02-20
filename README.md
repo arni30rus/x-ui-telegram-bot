@@ -18,7 +18,7 @@ VLESS Telegram Bot
 
     Клонируйте репозиторий
 
-    git clone https://github.com/arni30rus/vless_bot.gitcd vless_bot
+    git clone https://github.com/arni30rus/x-ui-telegram-bot.gitcd x-ui-telegram-bot
 
  
 
@@ -53,7 +53,7 @@ VLESS Telegram Bot
 Установка как сервис (Автозапуск) 
 
     Отредактируйте файл tgbot.service:
-    Замените /path/to/project на реальный путь к папке с ботом (например, /root/vless_bot).  
+    Замените /path/to/project на реальный путь к папке с ботом (например, /etc/x-ui-tg-bot).  
 
     Скопируйте файл в систему: 
      
