@@ -22,12 +22,13 @@
 ```bash
 git clone https://github.com/arni30rus/x-ui-telegram-bot.git
 cd x-ui-telegram-bot
-
+```
+`
 Запустите установщик:
 
 ```bash
 ./install.sh
-
+```
 
 ## Настройка
 
@@ -46,6 +47,7 @@ cd x-ui-telegram-bot
 ```bash
 source venv/bin/activate
 python main.py
+```
 
 ## Установка как сервис (Автозапуск)
 
@@ -63,6 +65,7 @@ sudo cp tgbot.service /etc/systemd/system/tgbot.service
 sudo systemctl daemon-reload
 sudo systemctl enable tgbot.service
 sudo systemctl start tgbot.service
+```
 
 ## Особенности работы:
 
