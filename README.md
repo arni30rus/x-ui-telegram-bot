@@ -1,7 +1,8 @@
 VLESS Telegram Bot
 
 Телеграм-бот для автоматического создания пользователей VLESS на панели 3X-UI (Reality).
-Возможности
+
+Возможности:
 
     Запуск аккаунтов через Telegram.
     Модерация заявок администратором.
@@ -33,9 +34,9 @@ VLESS Telegram Bot
          BOT_TOKEN — токен от @BotFather.
          ADMINS_ID — ваш Telegram ID.
          XUI_BASE_URL, XUI_USERNAME, XUI_PASSWORD — данные доступа к панели.
-         REALITY_PUBLIC_KEY, SHARED_SID — возьмите из настроек вашего Inbound в панели 3X-UI.
+         И др.
 
-Запуск:
+Запуск вручную:
 
     
     source venv/bin/activate
