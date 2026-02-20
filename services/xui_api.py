@@ -49,7 +49,7 @@ async def create_user_in_xui(email: str):
         }
 
         add_resp = await client.post(
-            f"{config.XUI_BASE_URL}/panel/inbound/addClient",
+            f"{config.XUI_BASE_URL}{config.XUI_ADD_CLIENT_PATH}",
             json=payload,
             headers=headers
         )

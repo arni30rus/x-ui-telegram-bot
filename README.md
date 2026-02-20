@@ -23,7 +23,12 @@
 git clone https://github.com/arni30rus/x-ui-telegram-bot.git
 cd x-ui-telegram-bot
 ```
-`
+Установите, если не установлен:
+
+```
+apt install python3.12-venv
+```
+
 Запустите установщик:
 
 ```bash

@@ -1,41 +1,58 @@
 #!/bin/bash
 
-echo "Начинаю установку TG Bot..."
+echo "Начинаю установку VLESS Bot..."
 
-# 1. Проверка Python
-if ! command -v python3 &> /dev/null
-then
-    echo "Python3 не установлен. Пожалуйста, установите его сначала."
-    exit
+MISSING_PKGS=0
+
+if ! dpkg -l | grep -q python3-venv; then
+    MISSING_PKGS=1
 fi
 
-echo "Python3 найден."
+if ! dpkg -l | grep -q python-is-python3; then
+    MISSING_PKGS=1
+fi
 
-# 2. Создание виртуального окружения (venv)
-if [ ! -d "venv" ]; then
-    echo "Создаю виртуальное окружение..."
-    python3 -m venv venv
+if [ $MISSING_PKGS -eq 1 ]; then
+    echo "Устанавливаю системные зависимости (python3-venv, python-is-python3)..."
+    sudo apt-get update
+    sudo apt-get install -y python3-venv python-is-python3
 else
-    echo "Виртуальное окружение уже существует."
+    echo "Системные пакеты уже установлены."
 fi
 
-# 3. Установка зависимостей
-echo "Устанавливаю библиотеки..."
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+
+if [ -d "$SCRIPT_DIR/venv" ]; then
+    echo "Найден старый venv. Удаляю для чистой установки..."
+    rm -rf "$SCRIPT_DIR/venv"
+fi
+
+echo "Создаю виртуальное окружение..."
+python3 -m venv venv
+
+echo " Устанавливаю библиотеки..."
 source venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 
-# 4. Создание .env из примера
 if [ ! -f .env ]; then
     echo "Создаю файл .env из шаблона..."
     cp .env.example .env
-    echo "ВАЖНО: Откройте файл .env и впишите туда свои токены и пароли!"
+    echo "ВАЖНО: Откройте файл .env и впишите туда свои токены и API PATH!"
 else
-    echo "Файл .env уже существует."
+    echo "✅ Файл .env уже существует."
+fi
+
+REAL_USER=${SUDO_USER:-$USER}
+if [ "$REAL_USER" != "root" ]; then
+    echo "Исправляю права доступа для пользователя $REAL_USER..."
+    chown -R $REAL_USER:$REAL_USER "$SCRIPT_DIR"
+    echo "Права на папку настроены."
 fi
 
 echo ""
-echo "Установка завершена!"
+echo "Установка завершена успешно!"
 echo "Теперь выполните:"
-echo "   1. Отредактируйте файл nano .env"
-echo "   2. Запустите бота: source venv/bin/activate && python main.py"
-echo "   3. Или настройте сервис (см. README.md)"
+echo " 1. nano .env  (настройте бота и API PATH)"
+echo " 2. source venv/bin/activate"
+echo " 3. python main.py"
