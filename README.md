@@ -1,69 +1,76 @@
-VLESS Telegram Bot
+# VLESS Telegram Bot
 
 Телеграм-бот для автоматического создания пользователей VLESS в панели 3X-UI.
 
-Возможности:
+## Возможности
 
-    Запуск аккаунтов через Telegram.
-    Модерация заявок администратором.
-    Генерация VLESS ссылок (поддержка Reality и TLS).
-    Интеграция с базой данных 3X-UI.
+- Запуск аккаунтов через Telegram.
+- Модерация заявок администратором.
+- Генерация VLESS ссылок (поддержка Reality и TLS).
+- Интеграция с базой данных 3X-UI.
 
-Требования:
+## Требования
 
-    Linux сервер (Ubuntu/Debian).
-    Python 3.10+
-    Установленная панель 3X-UI.
+- Linux сервер (Ubuntu/Debian).
+- Python 3.10+
+- Установленная панель 3X-UI.
 
-Быстрая установка:
+## Быстрая установка
 
-    Клонируйте репозиторий
+Клонируйте репозиторий:
 
-    git clone https://github.com/arni30rus/x-ui-telegram-bot.gitcd x-ui-telegram-bot
+```bash
+git clone https://github.com/arni30rus/x-ui-telegram-bot.git
+cd x-ui-telegram-bot
 
-     Запустите установщик 
-      
-    ./install.sh
-     
- 
-Настройка:
+Запустите установщик:
 
-    Скрипт создал файл .env. Откройте его и впишите данные: 
+```bash
+./install.sh
 
-         BOT_TOKEN — токен от @BotFather.
-         ADMINS_ID — ваш Telegram ID.
-         XUI_BASE_URL, XUI_USERNAME, XUI_PASSWORD — данные доступа к панели.
-         И др.
 
-Запуск вручную:
+## Настройка
 
-    
-    source venv/bin/activate
-    python main.py
-     
+Скрипт создал файл .env. Откройте его и впишите данные:
 
-Установка как сервис (Автозапуск):
+    BOT_TOKEN — токен от @BotFather.
 
-    Отредактируйте файл tgbot.service:
-    Замените /path/to/project на реальный путь к папке с ботом (например, /etc/x-ui-tg-bot).  
+    ADMINS_ID — ваш Telegram ID.
 
-    Скопируйте файл в систему: 
+    XUI_BASE_URL, XUI_USERNAME, XUI_PASSWORD — данные доступа к панели.
 
-     
-    sudo cp tgbot.service /etc/systemd/system/tgbot.service
-     
-    Запустите: 
-     
-    sudo systemctl daemon-reload
-    sudo systemctl enable tgbot.service
-    sudo systemctl start tgbot.service
-     
+    И др.
 
-Особенности работы:
+## Запуск вручную
 
-    Пользователь пишет боту /request_account. 
-    Админ одобряет заявку. 
-    Бот создает клиента в панели 3X-UI. 
-    ВАЖНО: После создания нужно зайти в веб-интерфейс 3X-UI, нажать кнопку Редактировать Клиента и ничего не меняя нажать "Сохранить", после этого подключение активируется.
+```bash
+source venv/bin/activate
+python main.py
 
-P.S. обойти лишнее сохранение пока не удалось, т.к. x-ui отвечает на GET запрос созданного конфига пустой строкой.  
+## Установка как сервис (Автозапуск)
+
+1. Отредактируйте файл tgbot.service:
+    Замените /path/to/project на реальный путь к папке с ботом (например, /etc/x-ui-tg-bot).
+
+2. Скопируйте файл в систему:
+
+```bash
+sudo cp tgbot.service /etc/systemd/system/tgbot.service
+
+3. Запустите сервис:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable tgbot.service
+sudo systemctl start tgbot.service
+
+## Особенности работы:
+
+Пользователь пишет боту /request_account.
+Админ одобряет заявку.
+Бот создает клиента в панели 3X-UI.
+
+ВАЖНО: После создания нужно зайти в веб-интерфейс 3X-UI, нажать кнопку "Редактировать Клиента" и, ничего не меняя, нажать "Сохранить". После этого подключение активируется.
+
+#P.S. Обойти лишнее сохранение пока не удалось, т.к. x-ui отвечает на GET запрос созданного конфига пустой строкой. В процессе поиска решения.
+
