@@ -90,4 +90,3 @@ async def create_user_in_xui(email: str):
 
     print("[DEBUG] Готово. Нажмите Сохранить в веб-интерфейсе.")
     return new_uuid
-
