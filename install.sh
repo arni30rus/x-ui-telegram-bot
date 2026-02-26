@@ -38,7 +38,6 @@ pip install -r requirements.txt
 if [ ! -f .env ]; then
     echo "Создаю файл .env из шаблона..."
     cp .env.example .env
-    echo "ВАЖНО: Откройте файл .env и впишите туда свои токены и API PATH!"
 else
     echo "✅ Файл .env уже существует."
 fi
@@ -47,12 +46,13 @@ REAL_USER=${SUDO_USER:-$USER}
 if [ "$REAL_USER" != "root" ]; then
     echo "Исправляю права доступа для пользователя $REAL_USER..."
     chown -R $REAL_USER:$REAL_USER "$SCRIPT_DIR"
-    echo "Права на папку настроены."
 fi
 
 echo ""
 echo "Установка завершена успешно!"
 echo "Теперь выполните:"
-echo " 1. nano .env  (настройте бота и API PATH)"
+echo " 1. nano .env  (заполните свои параметры vpn сервера)"
 echo " 2. source venv/bin/activate"
 echo " 3. python main.py"
+echo " 4. Или настройте автозапуск по инструкции в README"
+
